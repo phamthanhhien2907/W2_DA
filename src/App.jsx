@@ -13,7 +13,6 @@ function App() {
   const { isLoggedIn, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { currentData } = useSelector((state) => state.user);
-  console.log(token)
    useEffect(() => {
     if (isLoggedIn && token) {
       setLoading(true);

@@ -53,7 +53,7 @@ export const apiGetCurrent = () =>
     try {
       const response = await axiosConfig({
         method: "GET",
-        url: "/users/get-current",
+        url: "/get-current",
       });
       resolve(response);
     } catch (error) {

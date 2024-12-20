@@ -16,11 +16,13 @@ export const apiRegister = (data) =>
 export const apiLoginSuccess = (data) =>
   new Promise(async (resolve, reject) => {
     try {
+      console.log(data);
       const response = await axiosConfig({
         method: "POST",
         url: "/generateToken",
         data,
       });
+      console.log(response);
       resolve(response);
     } catch (error) {
       reject(error);

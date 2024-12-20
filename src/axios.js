@@ -10,7 +10,11 @@ instance.interceptors.request.use(
         1,
         -1
       );
-    config.headers = { authorization: `${token}` };
+    if (token) {
+      console.log("Sending request with token:", token); // Debug token
+      config.headers = { authorization: `Bearer ${token}` };
+    }
+
     return config;
   },
   function (error) {

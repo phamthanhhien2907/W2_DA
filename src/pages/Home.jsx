@@ -1,10 +1,11 @@
 import { apiGetAllUser } from '@/services/userService';
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 export default function Home() {
   const [data, setData] = React.useState([]);
   const [form, setForm] = React.useState({ id: '', firstName: '', lastName : '', email: '', password : '' });
   const [isEdit, setIsEdit] = React.useState(false);
-
+  const { currentData } = useSelector((state) => state.user);
   // Xử lý input form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,6 +28,7 @@ export default function Home() {
       console.log(rawResponse)
       if(rawResponse?.ok) {
         fetchAllUsers()
+        setIsEdit(false)
       }
     } else {
       // Thêm dữ liệu mới
@@ -77,15 +79,19 @@ export default function Home() {
       // console.log(res)
       await fetch('http://localhost:8080/api/users')
       .then(response => response.json())
-      .then(data => setData(data))
+      .then(data => {
+        setData(data?.filter((item) => item?.id !== currentData?.id))
+      })
       .catch(err => console.error(err));
     } catch (error) {
       console.log(error)
     }
   }
   React.useEffect(() => {
-    fetchAllUsers()
-  }, [])
+    if(currentData) {
+      fetchAllUsers()
+    }
+  }, [currentData])
   
   return (
     <div className="container mx-auto p-8">

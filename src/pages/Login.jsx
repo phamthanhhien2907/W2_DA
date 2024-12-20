@@ -36,15 +36,16 @@ const Login = () => {
         body: JSON.stringify({ ...formData })
       });
       const content = await rawResponse.json();
+      console.log(rawResponse)
       if(content) {
         setIsRegister(false)
       }
+     
     }else{
      try {
       const rs = await apiLoginSuccess(formData);
       console.log(rs)
-     
-      if (rs !== "Invalid username or password.") {
+      if (rs !== "Invalid username or password." ) {
         dispatch(loginSuccessAction(formData));
         setTimeout(() => {
           navigate("/");

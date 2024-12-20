@@ -2,26 +2,23 @@ import { apiLoginSuccess } from "../../services/authService";
 import actionType from "./actionType";
 export const loginSuccessAction = (data) => async (dispatch) => {
   try {
-    let response = apiLoginSuccess(data);
+    let response = await apiLoginSuccess(data);
     console.log(response);
-    response.then(function (result) {
-      console.log(result);
-      if (result) {
-        dispatch({
-          type: actionType.LOGIN_SUCCESS,
-          token: result,
-        });
-      } else {
-        dispatch({
-          type: actionType.LOGIN_SUCCESS,
-          data: null,
-        });
-      }
-    });
+    if (response) {
+      dispatch({
+        type: actionType.LOGIN_SUCCESS,
+        token: response,
+      });
+    } else {
+      dispatch({
+        type: actionType.LOGIN_SUCCESS,
+        token: null,
+      });
+    }
   } catch (error) {
     dispatch({
       type: actionType.LOGIN_SUCCESS,
-      data: null,
+      token: null,
       msg: error,
     });
   }
