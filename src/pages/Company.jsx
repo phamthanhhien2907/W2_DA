@@ -1,9 +1,9 @@
 import { apiGetAllUser } from '@/services/userService';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-export default function Home() {
+export default function Company() {
   const [data, setData] = React.useState([]);
-  const [form, setForm] = React.useState({ id: '', firstName: '', lastName : '', email: '', password : '', company : '' });
+  const [form, setForm] = React.useState({ id: '', companyName: ''});
   const [isEdit, setIsEdit] = React.useState(false);
   const { currentData } = useSelector((state) => state.user);
   // Xử lý input form
@@ -18,7 +18,7 @@ export default function Home() {
 
     if (isEdit) {
       // Update dữ liệu
-      const rawResponse = await fetch(`http://localhost:8080/api/updateUser/ + ${form?.id}`, {
+      const rawResponse = await fetch(`http://localhost:8080/api/updateCompany/ + ${form?.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -35,7 +35,7 @@ export default function Home() {
       try {
         // const res = await fetch('http://localhost:8080/api/users');
         // console.log(res)
-        const rawResponse = await fetch('http://localhost:8080/api/addNewUser', {
+        const rawResponse = await fetch('http://localhost:8080/api/addNewCompany', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -50,11 +50,11 @@ export default function Home() {
         console.log(error)
       }
     }
-    setForm({ id: '', firstName: '', lastName : '', email: '', password : '', company : '' });
+    setForm({ id: '', companyName: '' });
   };
   // Xóa dữ liệu
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:8080/api/deleteUser/ + ${id}`, {
+    await fetch(`http://localhost:8080/api/deleteCompany/ + ${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -77,10 +77,9 @@ export default function Home() {
     try {
       // const res = await apiGetAllUser()
       // console.log(res)
-      await fetch('http://localhost:8080/api/users')
+      await fetch('http://localhost:8080/api/company')
       .then(response => response.json())
       .then(data => {
-        // setData(data?.filter((item) => item?.id !== currentData?.id))
         setData(data)
       })
       .catch(err => console.error(err));
@@ -96,48 +95,22 @@ export default function Home() {
   console.log(data)
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-4 text-center">CRUD User Table</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center">CRUD Company Table</h1>
 
       
       <form className="mb-4" onSubmit={handleSubmit}>
         <div className="flex space-x-4 mb-4">
           <input
             type="text"
-            name="firstName"
-            placeholder="First name"
-            value={form.firstName}
+            name="companyName"
+            placeholder="Tên công ty"
+            value={form.companyName}
             onChange={handleInputChange}
-            className="p-2 border rounded w-full"
+            className="p-2 border rounded w-80"
             required
           />
-           <input
-            type="text"
-            name="lastName"
-            placeholder="Last name"
-            value={form.lastName}
-            onChange={handleInputChange}
-            className="p-2 border rounded w-full"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleInputChange}
-            className="p-2 border rounded w-full"
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleInputChange}
-            className="p-2 border rounded w-full"
-            required
-          />
-           
+          
+          
         </div>
         <button
           type="submit"
@@ -152,9 +125,7 @@ export default function Home() {
         <thead>
           <tr className="bg-gray-200">
             <th className="border p-2">ID</th>
-            <th className="border p-2">FirstName</th>
-            <th className="border p-2">LastName</th>
-            <th className="border p-2">Email</th>
+            <th className="border p-2">Company Name</th>
             <th className="border p-2">Actions</th>
           </tr>
         </thead>
@@ -163,10 +134,8 @@ export default function Home() {
             data.map((item) => (
               <tr key={item.id} className="hover:bg-gray-100">
                 <td className="border p-2 text-center">{item?.id}</td>
-                <td className="border p-2 text-center">{item?.firstName}</td>
-                <td className="border p-2 text-center">{item?.lastName}</td>
-                <td className="border p-2 text-center">{item?.email}</td>
-
+                <td className="border p-2 text-center">{item?.companyName}</td>
+              
                 <td className="border p-2 text-center">
                   <button
                     onClick={() => handleEdit(item)}

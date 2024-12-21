@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Login from "./pages/Login";
 import { Toaster } from "react-hot-toast";
+import Company from "./pages/Company";
 function App() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
@@ -30,6 +31,7 @@ function App() {
         <Routes>
           <Route path={path.PUBLIC} element={<Public />} className="max-sm:hidden max-lg:hidden w-full">
             <Route path={path.HOME} element={<Home />} />
+            <Route path={path.COMPANY} element={<Company />} />
           </Route>
           <Route path="/login" element={<Login/>}>
 
